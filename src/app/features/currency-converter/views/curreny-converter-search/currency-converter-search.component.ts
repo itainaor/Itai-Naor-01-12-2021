@@ -104,6 +104,10 @@ export class CurrencyConverterSearchComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.amountFormControl.valueChanges.subscribe((val) => {
+      this.addHistory();
+    });
+
     this.currencyConverterFormGroup.valueChanges.subscribe((val) => {
       this.addHistory();
     });

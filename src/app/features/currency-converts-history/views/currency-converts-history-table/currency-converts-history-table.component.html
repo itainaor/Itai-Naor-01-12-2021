@@ -15,7 +15,7 @@
     <ng-template #currencyConvertsTableTemplate>
       <tr *ngFor="let convert of currencyConverts; let i = index">
         <td>
-          <span>{{i + 1}}</span>
+          <span>{{currencyConverts.length - i}}</span>
         </td>
         <td>
           <span>{{convert.timestamp | date: 'dd/MM/yy, HH:mm:ss'}}</span>
