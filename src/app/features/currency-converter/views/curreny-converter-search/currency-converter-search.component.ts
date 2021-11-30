@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../../core/reducer/user.service';
 import {ICurrency} from '../../../../models/currency';
 import {ToastrService} from 'ngx-toastr';
@@ -19,6 +19,7 @@ import {Store} from '@ngrx/store';
 })
 export class CurrencyConverterSearchComponent implements OnInit, OnDestroy {
 
+  public amountFormControl = new FormControl(null);
   public currencies: ICurrency[];
   public currencyConverterFormGroup: FormGroup;
   private stateSubscription: Subscription;
@@ -48,27 +49,27 @@ export class CurrencyConverterSearchComponent implements OnInit, OnDestroy {
   }
 
   public switchFromTo(): void {
-    const fromValue = this.currencyConverterFormGroup.get('from').value;
-    const toValue = this.currencyConverterFormGroup.get('to').value;
-    this.currencyConverterFormGroup.get('from').setValue(toValue);
-    this.currencyConverterFormGroup.get('to').setValue(fromValue);
+    this.currencyConverterFormGroup.patchValue({
+      from: this.currencyConverterFormGroup.get('to').value,
+      to: this.currencyConverterFormGroup.get('from').value
+    });
   }
 
   private addHistory(): void {
-    if (this.currencyConverterFormGroup.get('amount').value) {
+    if (this.amountFormControl.value) {
       let currencyConvertsHistory: ICurrencyConvert[] = JSON.parse(localStorage.getItem('currencyConvertsHistory'));
       if (!currencyConvertsHistory) {
         currencyConvertsHistory = [];
       }
-      currencyConvertsHistory.push({
+      currencyConvertsHistory.unshift({
         timestamp: Date.now(),
         from: {
           name: this.currencyConverterFormGroup.get('from').value?.name,
-          amount: this.currencyConverterFormGroup.get('amount').value
+          amount: this.amountFormControl.value
         },
         to: {
           name: this.currencyConverterFormGroup.get('to').value?.name,
-          amount: this.currencyExchangePipe.transform(this.currencyConverterFormGroup.get('amount').value, [
+          amount: this.currencyExchangePipe.transform(this.amountFormControl.value, [
             this.currencyConverterFormGroup.get('from').value?.rate,
             this.currencyConverterFormGroup.get('to').value?.rate
           ])
@@ -81,7 +82,6 @@ export class CurrencyConverterSearchComponent implements OnInit, OnDestroy {
   private initForm(): void {
 
     this.currencyConverterFormGroup = this.formBuilder.group({
-      amount: [null],
       from: [null],
       to: [null]
     });
@@ -104,15 +104,15 @@ export class CurrencyConverterSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.currencyConverterFormGroup.valueChanges.subscribe(() => {
+    this.currencyConverterFormGroup.valueChanges.subscribe((val) => {
       this.addHistory();
     });
 
-    this.currencyConverterFormGroup.get('from').valueChanges.subscribe((val) => {
+    this.currencyConverterFormGroup.get('from').valueChanges.subscribe((val: ICurrency) => {
       this.store.dispatch( {type: actions.ACTION_SET_FROM_CURRENCY, payload: val});
     });
 
-    this.currencyConverterFormGroup.get('to').valueChanges.subscribe((val) => {
+    this.currencyConverterFormGroup.get('to').valueChanges.subscribe((val: ICurrency) => {
       this.store.dispatch( {type: actions.ACTION_SET_TO_CURRENCY, payload: val});
     });
   }
