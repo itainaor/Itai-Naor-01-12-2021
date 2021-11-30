@@ -1,0 +1,44 @@
+@import '../../../../assets/scss/variables';
+
+.currency-converter-search-wrapper {
+  ::ng-deep
+  .ng-value {
+    margin-left: 3px;
+  }
+
+  .currency-flag {
+    position: relative;
+    top: 2px;
+  }
+
+  .replace-currencies-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .replace-currencies-button {
+      position: initial;
+    }
+  }
+
+  .convert-data-outer-wrapper {
+    height: 72px;
+    .convert-data-wrapper {
+      .result {
+        font-size: 32px;
+      }
+    }
+  }
+
+}
+
+
+@media (min-width: $large_mobile_view) {
+  .currency-converter-search-wrapper {
+    .replace-currencies-button-wrapper {
+      .replace-currencies-button {
+        position: relative;
+        top: 15px;
+      }
+    }
+  }
+}

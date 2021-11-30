@@ -1,0 +1,33 @@
+<div class="currency-converts-history-table-wrapper table-responsive">
+  <table class="table table-hover">
+    <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">Time</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="currencyConverts && currencyConverts?.length === 0; else currencyConvertsTableTemplate">
+      <td colspan="3">There are no conversions yet.</td>
+    </tr>
+    <ng-template #currencyConvertsTableTemplate>
+      <tr *ngFor="let convert of currencyConverts; let i = index">
+        <td>
+          <span>{{i + 1}}</span>
+        </td>
+        <td>
+          <span>{{convert.timestamp | date: 'dd/MM/yy, HH:mm:ss'}}</span>
+        </td>
+        <td>
+          <span>{{convert.from.amount | currency: convert.from.name}}</span>
+        </td>
+        <td>
+          <span>{{convert.to.amount | currency: convert.to.name}}</span>
+        </td>
+      </tr>
+    </ng-template>
+    </tbody>
+  </table>
+</div>

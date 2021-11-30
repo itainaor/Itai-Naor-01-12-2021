@@ -1,6 +1,19 @@
-# CurrencyConverter
-
+# Currency Converter
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.8.
+
+The main goals of this project are:
+1. Create a currency converter web application.
+2. Show my coding skills.
+
+The project structure and architecture are:
+1. assets - external files (js, css, images)
+2. core - singleton services
+3. features - app routes and views
+4. models - app classes and interfaces
+5. shared - shared components and pipes
+
+Demo: https://itainaor.github.io/
+
 
 ## Development server
 

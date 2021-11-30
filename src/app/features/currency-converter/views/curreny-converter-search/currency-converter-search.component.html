@@ -1,0 +1,66 @@
+<div class="currency-converter-search-wrapper" *ngIf="currencies && currencies.length">
+  <form [formGroup]="currencyConverterFormGroup">
+    <div class="row">
+      <div class="col-lg">
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number"
+                 class="form-control"
+                 id="amount"
+                 placeholder="Enter amount"
+                 [formControlName]="'amount'">
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-group currency-dropdown">
+          <label>From</label>
+          <ng-select [formControlName]="'from'" [clearable]="false" [items]="currencies" [bindLabel]="'name'">
+            <ng-template ng-label-tmp let-item="item">
+              <span class="currency-flag currency-flag-{{item.name.toLowerCase()}}"></span>
+              {{item.name}}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              <span class="currency-flag currency-flag-{{item.name.toLowerCase()}}"></span>
+              {{item.name}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-lg flex-grow-0 replace-currencies-button-wrapper">
+        <div class="form-group">
+          <button class="btn btn-primary replace-currencies-button"
+                  type="button"
+                  (click)="switchFromTo()">
+            <i class="bi bi-arrow-left-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-group currency-dropdown">
+          <label>To</label>
+          <ng-select [formControlName]="'to'" [clearable]="false" [items]="currencies" [bindLabel]="'name'">
+            <ng-template ng-label-tmp let-item="item">
+              <span class="currency-flag currency-flag-{{item.name.toLowerCase()}}"></span>
+              {{item.name}}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              <span class="currency-flag currency-flag-{{item.name.toLowerCase()}}"></span>
+              {{item.name}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="convert-data-outer-wrapper">
+    <ng-container *ngIf="currencyConverterFormGroup.get('amount').value">
+      <div class="convert-data-wrapper">
+        <div>{{currencyConverterFormGroup.get('amount').value | currency: currencyConverterFormGroup.get('from').value?.name}} =</div>
+        <div class="result">{{currencyConverterFormGroup.get('amount').value |
+          currencyExchange: [currencyConverterFormGroup.get('from').value?.rate, currencyConverterFormGroup.get('to').value?.rate] |
+          currency: currencyConverterFormGroup.get('to').value?.name}}</div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>

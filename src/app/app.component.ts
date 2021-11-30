@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import {AppService} from './core/app.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'currency-converter';
+
+  constructor(private appService: AppService) {
+  }
+
+  public get pageTitle(): string {
+    return this.appService.pageTitle;
+  }
 }

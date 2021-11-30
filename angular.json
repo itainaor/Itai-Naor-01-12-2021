@@ -24,9 +24,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/app/assets/css/minty.min.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/currency-flags/dist/currency-flags.css",
+              "src/app/assets/scss/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -88,7 +96,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }

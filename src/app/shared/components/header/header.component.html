@@ -1,0 +1,25 @@
+<div class="header-wrapper">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-coin"></i>
+      My Currency Converter
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let item of navItems">
+          <a class="nav-link" [routerLink]="item?.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <ng-container *ngIf="item.iconClass">
+              <i class="bi" [ngClass]="item?.iconClass"></i>
+            </ng-container>
+            {{item?.display}}
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
