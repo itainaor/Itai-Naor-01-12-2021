@@ -16,6 +16,8 @@ import {throwError} from 'rxjs';
 })
 export class CurrencyConverterComponent implements OnInit {
 
+  public isLoaded = false;
+
   constructor(private requestService: RequestService,
               private store: Store<AppReducerState>,
               private toastr: ToastrService,
@@ -45,6 +47,7 @@ export class CurrencyConverterComponent implements OnInit {
           });
         }
         this.store.dispatch( {type: actions.ACTION_INIT_CURRENCIES, payload: currencies});
+        this.isLoaded = true;
       }),
       catchError((error: any) => {
         this.toastr.error('Failed to fetch currencies.', 'Error!');

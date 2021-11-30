@@ -1,3 +1,5 @@
 <div class="currency-converter-wrapper">
-  <app-currency-converter-search></app-currency-converter-search>
+  <ng-container *ngIf="isLoaded">
+    <app-currency-converter-search></app-currency-converter-search>
+  </ng-container>
 </div>
