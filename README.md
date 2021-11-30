@@ -11,6 +11,7 @@ The project structure and architecture are:
 3. features - app routes and views
 4. models - app classes and interfaces
 5. shared - shared components and pipes
+6. state management is handled using ngrx/store.
 
 Demo: https://itainaor.github.io/
 
