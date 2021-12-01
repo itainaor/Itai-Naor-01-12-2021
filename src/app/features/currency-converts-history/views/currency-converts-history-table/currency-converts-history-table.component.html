@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     <tr *ngIf="currencyConverts && currencyConverts?.length === 0; else currencyConvertsTableTemplate">
-      <td colspan="3">There are no conversions yet.</td>
+      <td colspan="4">There are no conversions yet.</td>
     </tr>
     <ng-template #currencyConvertsTableTemplate>
       <tr *ngFor="let convert of currencyConverts; let i = index">
