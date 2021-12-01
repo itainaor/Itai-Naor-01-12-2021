@@ -23,8 +23,8 @@ export class CurrencyConverterSearchComponent implements OnInit {
   public currencies: ICurrency[];
   public currencyConverterFormGroup: FormGroup;
   private currencyExchangePipe = new CurrencyExchangePipe();
-  private initialFromCurrency: ICurrency;
-  private initialToCurrency: ICurrency;
+  private initialFromCurrency: string;
+  private initialToCurrency: string;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -52,8 +52,7 @@ export class CurrencyConverterSearchComponent implements OnInit {
     this.currencyConverterFormGroup.patchValue({
       from: this.currencyConverterFormGroup.get('to').value,
       to: this.currencyConverterFormGroup.get('from').value
-    }, { onlySelf: true, emitEvent: false });
-    this.addHistory();
+    });
   }
 
   private addHistory(): void {
@@ -94,30 +93,24 @@ export class CurrencyConverterSearchComponent implements OnInit {
       })
     ).subscribe();
 
-    if (this.initialFromCurrency) {
-      this.currencyConverterFormGroup.get('from').setValue(this.initialFromCurrency);
-    } else {
-      const fromFiltered = this.currencies.filter(currency => currency.name.toLowerCase() === CONSTANTS.CURRENCY_CONVERTER.DEFAULT_FROM);
-      if (fromFiltered.length) {
-        this.currencyConverterFormGroup.get('from').setValue(fromFiltered[0]);
-      }
+    const fromFiltered = this.currencies.filter(currency => currency.name.toLowerCase() ===
+      (this.initialFromCurrency ? this.initialFromCurrency.toLowerCase() : CONSTANTS.CURRENCY_CONVERTER.DEFAULT_FROM));
+    if (fromFiltered.length) {
+      this.currencyConverterFormGroup.get('from').setValue(fromFiltered[0]);
     }
 
-    if (this.initialToCurrency) {
-      this.currencyConverterFormGroup.get('to').setValue(this.initialToCurrency);
-    } else {
-      const toFiltered = this.currencies.filter(currency => currency.name.toLowerCase() === CONSTANTS.CURRENCY_CONVERTER.DEFAULT_TO);
-      if (toFiltered.length) {
-        this.currencyConverterFormGroup.get('to').setValue(toFiltered[0]);
-      }
+    const toFiltered = this.currencies.filter(currency => currency.name.toLowerCase() ===
+      (this.initialToCurrency ? this.initialToCurrency.toLowerCase() : CONSTANTS.CURRENCY_CONVERTER.DEFAULT_TO));
+    if (toFiltered.length) {
+      this.currencyConverterFormGroup.get('to').setValue(toFiltered[0]);
     }
 
     this.currencyConverterFormGroup.get('from').valueChanges.subscribe((val: ICurrency) => {
-      this.store.dispatch( {type: actions.ACTION_SET_FROM_CURRENCY, payload: val});
+      this.store.dispatch( {type: actions.ACTION_SET_FROM_CURRENCY, payload: val.name});
     });
 
     this.currencyConverterFormGroup.get('to').valueChanges.subscribe((val: ICurrency) => {
-      this.store.dispatch( {type: actions.ACTION_SET_TO_CURRENCY, payload: val});
+      this.store.dispatch( {type: actions.ACTION_SET_TO_CURRENCY, payload: val.name});
     });
   }
 }

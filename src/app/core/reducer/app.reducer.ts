@@ -3,8 +3,8 @@ import {ICurrency} from '../../models/currency';
 
 export interface AppReducerState {
   readonly currencies: ICurrency[];
-  readonly fromCurrency: ICurrency;
-  readonly toCurrency: ICurrency;
+  readonly fromCurrency: string;
+  readonly toCurrency: string;
 
 }
 
