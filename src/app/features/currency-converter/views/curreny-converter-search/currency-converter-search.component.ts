@@ -19,7 +19,6 @@ import {Store} from '@ngrx/store';
 })
 export class CurrencyConverterSearchComponent implements OnInit {
 
-  public amountFormControl = new FormControl(null);
   public currencies: ICurrency[];
   public currencyConverterFormGroup: FormGroup;
   private currencyExchangePipe = new CurrencyExchangePipe();
